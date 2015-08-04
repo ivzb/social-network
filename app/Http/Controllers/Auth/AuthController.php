@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
+use Validator;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -21,7 +21,9 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    protected $redirectPath = '/home';
+    protected $loginPath = '/auth/login';
+    protected $registerPath = '/auth/register';
 
     /**
      * Create a new authentication controller instance.
@@ -33,33 +35,87 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function getLogin()
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
+        return view('auth.login');
+    }
+
+    public function postLogin(Request $request)
+    {
+        $this->middleware('crsf');
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect($this->loginPath)->withInput()->withErrors($validator);
+        }
+
+        if (Auth::attempt([
+                'email' => $request->get('email'),
+                'password' => $request->get('password')
+        ])) {
+            return redirect($this->redirectPath);
+        }
+
+        return redirect($this->loginPath)->withInput()->withErrors([
+            'email' => 'The credentials you entered did not match our records. Try again?'
+        ]);
+    }
+
+    public function getLogout()
+    {
+        Auth::logout();
+
+        return redirect('/');
+    }
+
+    public function getRegister()
+    {
+        return view('auth.register');
+    }
+
+    public function postRegister(Request $request)
+    {
+        $this->middleware('crsf');
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|min:3|max:50|unique:users',
+            'first_name' => 'required|min:3|max:50',
+            'last_name' => 'required|min:3|max:50',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
+
+        if ($validator->fails()) {
+            return redirect($this->registerPath)->withInput()->withErrors($validator);
+        }
+
+        if ($this->createUser($request->all())) {
+            $this->postLogin($request);
+        }
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array  $user_data
      * @return User
      */
-    protected function create(array $data)
+    private function createUser(array $user_data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        $user = User::create([
+            'username' => $user_data['username'],
+            'first_name' => $user_data['first_name'],
+            'last_name' => $user_data['last_name'],
+            'email' => $user_data['email'],
+            'password' => bcrypt($user_data['password']),
         ]);
+
+        $user->save();
+
+        return $user;
     }
 }
