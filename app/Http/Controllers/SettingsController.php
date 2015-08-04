@@ -8,7 +8,7 @@ use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class SettingsController extends Controller
 {
     protected $redirectPath = '/auth/login';
 
@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['user' => Auth::user()]);
+        return view('settings', ['user' => Auth::user()]);
     }
 
     /**

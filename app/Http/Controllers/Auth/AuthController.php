@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Profile;
 use App\Http\Controllers\Controller;
 use Auth;
 use Validator;
@@ -96,6 +97,8 @@ class AuthController extends Controller
         if ($this->createUser($request->all())) {
             $this->postLogin($request);
         }
+
+        return redirect($this->redirectPath);
     }
 
     /**
@@ -113,8 +116,12 @@ class AuthController extends Controller
             'email' => $user_data['email'],
             'password' => bcrypt($user_data['password']),
         ]);
-
         $user->save();
+
+        $profile = Profile::create([
+            'user_id' => $user->id
+        ]);
+        $profile->save();
 
         return $user;
     }

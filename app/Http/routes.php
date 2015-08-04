@@ -24,5 +24,8 @@ Route::get('/', function () {
     return view('guest');
 });
 
-// Home page
+// Home routes
 Route::get('/home', 'HomeController@index');
+
+// Settings routes
+Route::get('/settings', 'SettingsController@index');

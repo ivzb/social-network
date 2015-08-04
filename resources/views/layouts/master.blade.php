@@ -3,8 +3,11 @@
     <title>Social Network - @yield('title')</title>
 </head>
 <body>
+    <p>Hello, <b>{{$user->username}}</b></p>
+
     <ul id="main-menu">
         <li><a href="/home">Home</a></li>
+        <li><a href="/settings">Settings</a></li>
         <li><a href="/auth/logout">Logout</a></li>
     </ul>
 
