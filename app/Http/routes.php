@@ -20,12 +20,11 @@ Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 Route::get('/auth/register', 'Auth\AuthController@getRegister');
 Route::post('/auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/', function () {
-    return view('guest');
-});
+// Profile routes
+Route::get('/profile/', 'ProfileController@index');
+Route::get('/profile/edit', 'ProfileController@edit');
+Route::post('/profile/update', 'ProfileController@update');
 
 // Home routes
 Route::get('/home', 'HomeController@index');
-
-// Settings routes
-Route::get('/settings', 'SettingsController@index');
+Route::get('/', 'GuestController@index');

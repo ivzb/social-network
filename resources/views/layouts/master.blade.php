@@ -7,7 +7,8 @@
 
     <ul id="main-menu">
         <li><a href="/home">Home</a></li>
-        <li><a href="/settings">Settings</a></li>
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/profile/edit">Settings</a></li>
         <li><a href="/auth/logout">Logout</a></li>
     </ul>
 

@@ -14,38 +14,26 @@
 
         {!! csrf_field() !!}
 
-        <div>
-            Username
-            <input type="text" name="username" value="{{ old('username') }}">
-        </div>
-
-        <div>
-            First name
-            <input type="text" name="first_name" value="{{ old('first_name') }}">
-        </div>
-
-        <div>
-            Last name
-            <input type="text" name="last_name" value="{{ old('last_name') }}">
-        </div>
-
-        <div>
-            Email
-            <input type="email" name="email" value="{{ old('email') }}">
-        </div>
-
-        <div>
-            Password
-            <input type="password" name="password">
-        </div>
-
-        <div>
-            Confirm Password
-            <input type="password" name="password_confirmation">
-        </div>
-
-        <div>
-            <button type="submit">Register</button>
-        </div>
+        <ul>
+            <li>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" value="{{ old('username') }}">
+            </li>
+            <li>
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="{{ old('email') }}">
+            </li>
+            <li>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+            </li>
+            <li>
+                <label for="confirm-password_confirmation">Confirm Password</label>
+                <input type="password" name="password_confirmation" id="password_confirmation">
+            </li>
+            <li>
+                <button type="submit">Register</button>
+            </li>
+        </ul>
     </form>
 @endsection

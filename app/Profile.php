@@ -29,4 +29,8 @@ class Profile extends Model
         'twitter',
         'google+'
     ];
+
+    public static function getUserProfile($user_id) {
+        return Profile::where('user_id', $user_id)->firstOrFail();
+    }
 }

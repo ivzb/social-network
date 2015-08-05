@@ -13,8 +13,10 @@ class CreateProfilesTable extends Migration
     public function up()
     {
         Schema::create('profiles', function (Blueprint $table) {
-            $table->increments('id')->unsigned();;
-            $table->integer('user_id')->unsigned();;
+            $table->increments('id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('first_name', 50)->nullable();
+            $table->string('last_name', 50)->nullable();
             $table->date('birth_date')->nullable();
             $table->enum('gender', ['not specified', 'male', 'female', 'other'])->default('not specified');
             $table->string('location', 255)->nullable();
@@ -22,7 +24,7 @@ class CreateProfilesTable extends Migration
             $table->string('website', 255)->nullable();
             $table->string('facebook', 255)->nullable();
             $table->string('twitter', 255)->nullable();
-            $table->string('google+', 255)->nullable();
+            $table->string('google_plus', 255)->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
