@@ -1,8 +1,9 @@
 @extends('layouts.master')
 @section('title', 'Profile')
 @section('content')
-    <h3>{{ $user->username }}'s profile</h3>
+    <h2>{{ $user->username }}'s profile</h2>
 
+    <h3>About</h3>
     <ul>
         <li>
             <span>First name: {{ $profile->first_name }}</span>
@@ -37,4 +38,14 @@
     </ul>
 
     <hr />
+
+    {!! Form::open(array('action' => 'PostController@store')) !!}
+        {!! Form::textarea('post_content', null, ['placeholder' => 'What\'s on your mind?']) !!}
+        {!! Form::hidden('recipient_user_id', $user->id) !!}
+        {!! Form::submit('Post') !!}
+    {!! Form::close() !!}
+
+    <hr />
+
+
 @endsection

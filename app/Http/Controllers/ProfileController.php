@@ -85,6 +85,8 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
+        // TODO: Add validation
+
         $profile = Profile::getUserProfile(Auth::user()->id);
 
         $profile->first_name = $request->first_name;

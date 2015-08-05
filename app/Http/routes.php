@@ -28,3 +28,6 @@ Route::post('/profile/update', 'ProfileController@update');
 // Home routes
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'GuestController@index');
+
+// Post routes
+Route::post('/post/store', 'PostController@store');
