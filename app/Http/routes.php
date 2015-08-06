@@ -21,9 +21,10 @@ Route::get('/auth/register', 'Auth\AuthController@getRegister');
 Route::post('/auth/register', 'Auth\AuthController@postRegister');
 
 // Profile routes
-Route::get('/profile/', 'ProfileController@index');
 Route::get('/profile/edit', 'ProfileController@edit');
 Route::post('/profile/update', 'ProfileController@update');
+Route::get('/profile/{username}', 'ProfileController@show');
+Route::get('/profile/', 'ProfileController@index');
 
 // Home routes
 Route::get('/home', 'HomeController@index');

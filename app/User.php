@@ -32,4 +32,30 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public static function getUser($username)
+    {
+        $user = User::where('username', $username)->firstOrFail();
+
+        return $user;
+    }
+
+    public static function getUserId($username)
+    {
+        $userId = User::where('username', $username)->select('id')->firstOrFail();
+
+        return $userId;
+    }
+
+    public static function getUsername($user_id)
+    {
+        $userId = User::where('id', $user_id)->select('username')->firstOrFail();
+
+        return $userId;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
 }

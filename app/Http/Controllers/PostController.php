@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use App\User;
 use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -52,6 +53,9 @@ class PostController extends Controller
         $post_content = $request->post_content;
 
         Post::createPost($author_user_id, $recipient_user_id, $post_content);
+
+        $username = User::getUsername($recipient_user_id)->username;
+        $this->profilePath .= $username;
 
         return redirect($this->profilePath);
     }

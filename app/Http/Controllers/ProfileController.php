@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 use Auth;
+use App\User;
 use App\Profile;
+use App\Post;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -26,10 +29,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $profile = Profile::getUserProfile(Auth::user()->id);
-
-        return view('profile/show', ['user' => $user, 'profile' => $profile]);
+        return $this->show(Auth::user()->username);
     }
 
     /**
@@ -56,12 +56,18 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $username
      * @return Response
      */
-    public function show($id)
+    public function show($username)
     {
-        //
+        $logged_user = Auth::user();
+
+        $user = User::getUser($username);
+        $profile = Profile::getUserProfile($user->id);
+        $posts = Post::getUserPosts($user->id);
+
+        return view('profile/show', ['user' => $logged_user, 'profile' => $profile, 'posts' => $posts]);
     }
 
     /**

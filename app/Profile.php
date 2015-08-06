@@ -33,4 +33,9 @@ class Profile extends Model
     public static function getUserProfile($user_id) {
         return Profile::where('user_id', $user_id)->firstOrFail();
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id');
+    }
 }

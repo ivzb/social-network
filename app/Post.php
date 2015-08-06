@@ -36,4 +36,23 @@ class Post extends Model
 
         $post->save();
     }
+
+    public static function getUserPosts($user_id)
+    {
+        $posts = Post::where('recipient_user_id', $user_id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+        return $posts;
+    }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'author_user_id');
+    }
+
+    public function recipient()
+    {
+        return $this->belongsTo('App\User', 'recipient_user_id');
+    }
 }
