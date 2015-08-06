@@ -35,6 +35,8 @@ class Post extends Model
         $post->content = $content;
 
         $post->save();
+
+        return $post;
     }
 
     public static function getUserPosts($user_id)
@@ -44,6 +46,13 @@ class Post extends Model
                 ->get();
 
         return $posts;
+    }
+
+    public static function getPost($post_id)
+    {
+        $post = Post::find($post_id);
+
+        return $post;
     }
 
     public function author()

@@ -32,3 +32,7 @@ Route::get('/', 'GuestController@index');
 
 // Post routes
 Route::post('/post/store', 'PostController@store');
+Route::get('/post/show/{id}', 'PostController@show');
+
+// Comment routes
+Route::post('/comment/store', 'CommentController@store');

@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Post;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class CommentController extends Controller
 {
     protected $redirectPath = '/auth/login';
+    protected $profilePath = '/profile/';
     protected $postPath = '/post/show/';
 
     public function __construct()
@@ -48,26 +50,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $author_user_id = Auth::user()->id;
-        $recipient_user_id = $request->recipient_user_id;
-        $post_content = $request->post_content;
+        $comment_id = $request->comment_id;
+        $user_id = Auth::user()->id;
+        $content = $request->comment_content;
+        $post_id = (int)$comment_id;
 
-        $new_post = Post::createPost($author_user_id, $recipient_user_id, $post_content);
+        Comment::createComment($comment_id, $user_id, $content);
 
-        return redirect($this->postPath . $new_post->id);
+        return redirect($this->postPath . $post_id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $post_id
+     * @param  int  $id
      * @return Response
      */
-    public function show($post_id)
+    public function show($id)
     {
-        $post = Post::getPost($post_id);
-
-        return view('post.post', ['user' => Auth::user(), 'post' => $post]);
+        //
     }
 
     /**

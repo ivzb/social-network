@@ -41,19 +41,14 @@
 
     {!! Form::open(array('action' => 'PostController@store')) !!}
         {!! Form::textarea('post_content', null, ['placeholder' => 'What\'s on your mind?']) !!}
-        {!! Form::hidden('recipient_user_id', $user->id) !!}
+        {!! Form::hidden('recipient_user_id', $profile->user->id) !!}
         {!! Form::submit('Post') !!}
     {!! Form::close() !!}
 
     <hr />
 
     @foreach ($posts as $post)
-        <ul>
-            <li>author: <a href="/profile/{{ $post->author->username }}">{{ $post->author->username }}</a></li>
-            <li>recipient: <a href="/profile/{{ $post->recipient->username }}">{{ $post->recipient->username }}</a></li>
-            <li>content: {{ $post->content }}</li>
-            <li>created at: {{ $post->created_at }}</li>
-        </ul>
+        @include('../post.post_content', ['post' => $post])
 
         <hr />
     @endforeach
