@@ -67,7 +67,12 @@ class ProfileController extends Controller
         $profile = Profile::getUserProfile($user->id);
         $posts = Post::getUserPosts($user->id);
 
-        return view('profile/show', ['user' => $logged_user, 'profile' => $profile, 'posts' => $posts]);
+        return view('profile/show',
+            [
+                'user' => $logged_user,
+                'profile' => $profile,
+                'posts' => $posts
+            ]);
     }
 
     /**

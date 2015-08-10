@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="col-md-8">
-            @include('post.post_content', [ 'post' => $post ])
+            @include('post.post_content', [ 'post' => $post, 'comments_count' => $comments_count ])
         </div>
     </div>
 @endsection

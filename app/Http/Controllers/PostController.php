@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Post;
 use App\Comment;
+use App\Like;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -68,7 +69,46 @@ class PostController extends Controller
     {
         $post = Post::getPost($post_id);
 
-        return view('post.post', [ 'user' => Auth::user(), 'post' => $post ]);
+        return view('post.post',
+            [
+                'user' => Auth::user(),
+                'post' => $post,
+                'comments_count' => 'unlimited'
+            ]);
+    }
+
+    /**
+     * Like the specified post.
+     *
+     * @param  int  $post_id
+     * @return Response
+     */
+    public function like($post_id)
+    {
+        // todo:  validate if user has permission to like this post
+
+        $current_post = Post::getPost($post_id);
+
+        Like::createPostLike($post_id, Auth::user()->id);
+
+        return redirect($this->postPath . $post_id);
+    }
+
+    /**
+     * Dislike the specified post.
+     *
+     * @param  int  $post_id
+     * @return Response
+     */
+    public function dislike($post_id)
+    {
+        // todo:  validate if user has permission to dislike this post
+
+        $current_post = Post::getPost($post_id);
+
+        Like::deletePostLike($post_id, Auth::user()->id);
+
+        return redirect($this->postPath . $post_id);
     }
 
     /**

@@ -22,14 +22,20 @@
                 <div class="media-body">
                     <div class="post-content">{!! $post->content !!}</div>
                     <div class="post-info">
-                        <a href="#post/id/likes">? likes</a>, <a href="#post/id/#comments">{{ $post->comments->count() }} comments</a>
+                        <span>{{ $post->likes->count() }} like{{ $post->likes->count() != 1 ? 's' : null }}</span>,
+                        <span>{{ $post->comments->count() }} comment{{ $post->comments->count() != 1 ? 's' : null }}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="panel-footer">
-        <span class="glyphicon glyphicon-thumbs-up"></span> <a href="#/post/id/like">Like</a>
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        @if ($post->likes->where('post_id', $post->id)->where('user_id', $user->id)->count() > 0)
+            <a href="/post/dislike/{{ $post->id }}" @if ($comments_count == 'limited') target="_blank" @endif>Dislike</a>
+        @else
+            <a href="/post/like/{{ $post->id }}" @if ($comments_count == 'limited') target="_blank" @endif>Like</a>
+        @endif
         <span class="glyphicon glyphicon-comment"></span> <a href="#/" onclick="$('#comment-content').focus();">Comment</a>
 
         <div class="comment-form">
@@ -39,8 +45,18 @@
             {!! Form::close() !!}
         </div>
 
-        @foreach ($post->comments as $comment)
-            <p>@include('../comments.comment_content', [ 'comment' => $comment ])</p>
-        @endforeach
+        @if ($comments_count == 'unlimited')
+            @foreach ($post->comments as $comment)
+                <p>@include('../comments.comment_content', [ 'comment' => $comment ])</p>
+            @endforeach
+        @elseif ($comments_count == 'limited')
+            @if (count($post->comments) > 3)
+                <p class="comments-show-all-link"><a href="/post/show/{{ $post->id }}">Show more comments...</a></p>
+            @endif
+
+            @foreach ($post->comments->take(3) as $comment)
+                @include('../comments.comment_content', [ 'comment' => $comment ])
+            @endforeach
+        @endif
     </div>
 </div>

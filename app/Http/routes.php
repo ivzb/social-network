@@ -33,6 +33,8 @@ Route::get('/', 'GuestController@index');
 // Post routes
 Route::post('/post/store', 'PostController@store');
 Route::get('/post/show/{id}', 'PostController@show');
+Route::get('/post/like/{id}', 'PostController@like');
+Route::get('/post/dislike/{id}', 'PostController@dislike');
 
 // Comment routes
 Route::post('/comment/store', 'CommentController@store');

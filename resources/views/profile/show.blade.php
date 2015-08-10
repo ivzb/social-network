@@ -82,7 +82,7 @@
 
                     @foreach ($posts as $post)
                         <hr />
-                        @include('../post.post_content', ['post' => $post])
+                        @include('../post.post_content', [ 'post' => $post, 'comments_count' => 'limited' ])
                     @endforeach
                 </div>
             </div>
