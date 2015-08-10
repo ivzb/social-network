@@ -1,71 +1,184 @@
 @extends('layouts.master')
 @section('title', 'Edit profile')
 @section('content')
-    <h3>Edit profile.</h3>
+    @include('layouts.logged-navigation', ['current_page' => 'settings'])
 
-    <form method="POST" action="/profile/update">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+    <div class="page-header">
+        <h2>Edit profile</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>About</strong></div>
+                <div class="panel-body">
+                    {!! Form::open(array('action' => 'ProfileController@update')) !!}
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <li class="list-group-item">
+                                <label for="first_name">First name:</label>
+                                {!! Form::text(
+                                    'first_name',
+                                    old('first_name') ? old('first_name') : $profile->first_name,
+                                    [
+                                        'placeholder' => 'First name',
+                                        'class' => 'form-control',
+                                        'id' => 'first_name'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="last_name">Last name:</label>
+                                {!! Form::text(
+                                    'last_name',
+                                    old('last_name') ? old('last_name') : $profile->last_name,
+                                    [
+                                        'placeholder' => 'Last name',
+                                        'class' => 'form-control',
+                                        'id' => 'last_name'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="birth_date">Birth date:</label>
+                                {!! Form::date(
+                                    'birth_date',
+                                    old('birth_date') ? old('birth_date') : $profile->birth_date,
+                                    [
+                                        'class' => 'form-control',
+                                        'id' => 'birth_date'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="gender">Gender:</label>
+                                {!! Form::select(
+                                        'gender',
+                                        [
+                                            'not specified' => 'Not specified',
+                                            'male' => 'Male',
+                                            'female' => 'Female',
+                                            'other' => 'Other'
+                                        ],
+                                        old('gender') ? old('gender') : $profile->gender,
+                                        [
+                                            'class' => 'form-control',
+                                            'id' => 'gender'
+                                        ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="about_me">About:</label>
+                                {!! Form::textarea(
+                                    'about_me',
+                                    old('about_me') ? old('about_me') : $profile->about_me,
+                                    [
+                                        'placeholder' => 'About me...',
+                                        'class' => 'form-control',
+                                        'id' => 'about_me',
+                                        'rows' => 3
+                                    ]
+                                ) !!}
+                            </li>
+                        </div>
+
+                        <div class="col-md-6">
+                            <li class="list-group-item">
+                                <label for="location">Location:</label>
+                                {!! Form::text(
+                                    'location',
+                                    old('location') ? old('location') : $profile->location,
+                                    [
+                                        'placeholder' => 'Location',
+                                        'class' => 'form-control',
+                                        'id' => 'location'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="website">Website:</label>
+                                {!! Form::text(
+                                    'website',
+                                    old('website') ? old('website') : $profile->website,
+                                    [
+                                        'placeholder' => 'Website',
+                                        'class' => 'form-control',
+                                        'id' => 'website'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="facebook">Facebook:</label>
+                                {!! Form::text(
+                                    'facebook',
+                                    old('facebook') ? old('facebook') : $profile->facebook,
+                                    [
+                                        'placeholder' => 'Facebook',
+                                        'class' => 'form-control',
+                                        'id' => 'facebook'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="twitter">Twitter:</label>
+                                {!! Form::text(
+                                    'twitter',
+                                    old('twitter') ? old('twitter') : $profile->twitter,
+                                    [
+                                        'placeholder' => 'Twitter',
+                                        'class' => 'form-control',
+                                        'id' => 'twitter'
+                                    ]
+                                ) !!}
+                            </li>
+
+                            <li class="list-group-item">
+                                <label for="google_plus">Google+:</label>
+                                {!! Form::text(
+                                    'google_plus',
+                                    old('google_plus') ? old('google_plus') : $profile->google_plus,
+                                    [
+                                        'placeholder' => 'Google+',
+                                        'class' => 'form-control',
+                                        'id' => 'google_plus'
+                                    ]
+                                ) !!}
+                            </li>
+                        </div>
+                    </div>
+
+                    {!! Form::submit('Edit', [ 'class' => 'btn btn-default center-block', 'id' => 'profile-edit-button' ]) !!}
+                    {!! Form::close() !!}
+                </div>
             </div>
-        @endif
-
-        {!! csrf_field() !!}
-
-        <ul>
-            <li>
-                <label for="first_name">First name</label>
-                <input type="text" name="first_name" id="first_name" value="{{ old('first_name') ? old('first_name') : $profile->first_name }}">
-            </li>
-            <li>
-                <label for="last_name">Last name</label>
-                <input type="text" name="last_name" id="last_name" value="{{ old('last_name') ? old('last_name') : $profile->last_name }}">
-            </li>
-            <li>
-                <label for="birth_date">Birth date</label>
-                <input type="date" name="birth_date" id="birth_date" value="{{ old('birth_date') ? old('birth_date') : $profile->birth_date }}">
-            </li>
-            <li>
-                <label for="gender">Gender</label>
-                <select name="gender" id="gender">
-                    <option value="not specified" {{ (old('gender') ? old('gender') : $profile->gender) == 'not specified' ? 'selected="selected"' : '' }}>Not specified</option>
-                    <option value="male" {{ (old('gender') ? old('gender') : $profile->gender) == 'male' ? 'selected="selected"' : '' }}>Male</option>
-                    <option value="female" {{ (old('gender') ? old('gender') : $profile->gender) == 'female' ? 'selected="selected"' : '' }}>Female</option>
-                    <option value="other" {{ (old('gender') ? old('gender') : $profile->gender) == 'other' ? 'selected="selected"' : '' }}>Other</option>
-                </select>
-            </li>
-            <li>
-                <label for="location">Location</label>
-                <input type="text" name="location" id="location" value="{{ old('location') ? old('location') : $profile->location }}">
-            </li>
-            <li>
-                <label for="about_me">About me</label>
-                <textarea name="about_me" id="about_me" rows="5" cols="20">{{ old('about_me') ? old('about_me') : $profile->about_me }}</textarea>
-            </li>
-            <li>
-                <label for="website">Website</label>
-                <input type="text" name="website" id="website" value="{{ old('website') ? old('website') : $profile->website }}">
-            </li>
-            <li>
-                <label for="facebook">Facebook</label>
-                <input type="text" name="facebook" id="facebook" value="{{ old('facebook') ? old('facebook') : $profile->facebook }}">
-            </li>
-            <li>
-                <label for="twitter">Twitter</label>
-                <input type="text" name="twitter" id="twitter" value="{{ old('twitter') ? old('twitter') : $profile->twitter }}">
-            </li>
-            <li>
-                <label for="google+">Google+</label>
-                <input type="text" name="google_plus" id="google_plus" value="{{ old('google_plus') ? old('google_plus') : $profile->google_plus }}">
-            </li>
-            <li>
-                <button type="submit">Edit</button>
-            </li>
-        </ul>
-    </form>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Picture</strong></h3>
+                </div>
+                <div class="panel-body">
+                    NotImplementedException();
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -1,17 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <title>Social Network - @yield('title')</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js" defer></script>
 </head>
 <body>
-    <p>Hello, <b>{{$user->username}}</b></p>
-
-    <ul id="main-menu">
-        <li><a href="/home">Home</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/profile/edit">Settings</a></li>
-        <li><a href="/auth/logout">Logout</a></li>
-    </ul>
-
     <div class="container">
         @yield('content')
     </div>

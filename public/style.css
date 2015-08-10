@@ -1,0 +1,42 @@
+.page-header {
+    margin-top: 15px;
+}
+
+.post-profile-image img {
+    width: 40px;
+    height: 40px;
+}
+
+.post-container-body {
+    padding-bottom: 5px;
+}
+
+.post-container-content {
+    margin-top: 5px;
+}
+
+.post-content,
+.comment-content,
+.profile-data {
+    word-break: break-all;
+}
+
+.post-info {
+    margin-top: 10px;
+    color: #9197a3;
+}
+
+.comment-form {
+    margin-top: 5px;
+}
+
+#profile-edit-button {
+    margin-top: 15px;
+}
+
+.profile-facebook-icon,
+.profile-twitter-icon,
+.profile-google-plus-icon,
+.profile-website-icon {
+    width: 22px;
+}

@@ -53,9 +53,9 @@ class PostController extends Controller
         $recipient_user_id = $request->recipient_user_id;
         $post_content = $request->post_content;
 
-        $new_post = Post::createPost($author_user_id, $recipient_user_id, $post_content);
+        Post::createPost($author_user_id, $recipient_user_id, $post_content);
 
-        return redirect($this->postPath . $new_post->id);
+        return redirect()->back();
     }
 
     /**
