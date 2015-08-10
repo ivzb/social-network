@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\Post;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -67,7 +68,7 @@ class PostController extends Controller
     {
         $post = Post::getPost($post_id);
 
-        return view('post.post', ['user' => Auth::user(), 'post' => $post]);
+        return view('post.post', [ 'user' => Auth::user(), 'post' => $post ]);
     }
 
     /**

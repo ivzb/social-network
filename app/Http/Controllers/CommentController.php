@@ -50,12 +50,13 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $comment_id = $request->comment_id;
+        // todo: add validation
+
         $user_id = Auth::user()->id;
         $content = $request->comment_content;
-        $post_id = (int)$comment_id;
+        $post_id = $request->post_id;
 
-        Comment::createComment($comment_id, $user_id, $content);
+        Comment::createComment($post_id, $user_id, $content);
 
         return redirect($this->postPath . $post_id);
     }

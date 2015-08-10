@@ -1,4 +1,4 @@
 @extends('layouts.master')
 @section('content')
-    @include('post.post_content', ['post' => $post])
+    @include('post.post_content', [ 'post' => $post ])
 @endsection

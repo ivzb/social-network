@@ -50,7 +50,7 @@ class Post extends Model
 
     public static function getPost($post_id)
     {
-        $post = Post::find($post_id);
+        $post = Post::where('id', $post_id)->firstOrFail();
 
         return $post;
     }
@@ -63,5 +63,10 @@ class Post extends Model
     public function recipient()
     {
         return $this->belongsTo('App\User', 'recipient_user_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 }

@@ -19,35 +19,36 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'id',
         'post_id',
         'user_id',
         'content'
     ];
 
-    public static function createComment($comment_id, $user_id, $content) {
+    public static function createComment($post_id, $user_id, $content) {
         // TODO: Add validation
 
         $comment = new Comment;
 
-        $comments_count = Comment::getCommentsCount($comment_id);
-
-        $comment->id = $comment_id . '/' . ($comments_count + 1);
+        $comment->post_id = $post_id;
         $comment->user_id = $user_id;
         $comment->content = $content;
 
         $comment->save();
     }
 
-    public static function getPostComments($post_id) {
-        $comments = Comment::where('id', 'LIKE', $post_id . '/%')->get();
+    public static function getComments($post_id) {
+        $comments = Comment::where('post_id', $post_id)->get();
 
         return $comments;
     }
 
-    private static function getCommentsCount($comment_id) {
-        $comments_count = Comment::where('id', 'LIKE', $comment_id . '/%')->count();
+    public function author()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 
-        return $comments_count;
+    public function post()
+    {
+        return $this->belongsTo('App\Post', 'post_id');
     }
 }
