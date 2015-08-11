@@ -23,6 +23,7 @@ Route::post('/auth/register', 'Auth\AuthController@postRegister');
 // Profile routes
 Route::get('/profile/edit', 'ProfileController@edit');
 Route::post('/profile/update', 'ProfileController@update');
+Route::post('/profile/uploadPicture', 'ProfileController@uploadPicture');
 Route::get('/profile/{username}', 'ProfileController@show');
 Route::get('/profile/', 'ProfileController@index');
 

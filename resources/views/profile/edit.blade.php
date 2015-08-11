@@ -6,6 +6,16 @@
     <div class="page-header">
         <h2>Edit profile</h2>
     </div>
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><strong>{{ $error }}</strong></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-7">
@@ -13,16 +23,6 @@
                 <div class="panel-heading"><strong>About</strong></div>
                 <div class="panel-body">
                     {!! Form::open(array('action' => 'ProfileController@update')) !!}
-                    @if (count($errors) > 0)
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
                     <div class="row">
                         <div class="col-md-6">
@@ -173,10 +173,32 @@
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Picture</strong></h3>
+                    <h3 class="panel-title"><strong>Upload profile picture</strong></h3>
                 </div>
                 <div class="panel-body">
-                    NotImplementedException();
+                    {!! Form::open([
+                        'action' => 'ProfileController@uploadPicture',
+                        'files' => true
+                    ]) !!}
+
+                    <div class="form-group">
+                        {!! Form::label('Profile image') !!}
+                        {!! Form::file('image', [ 'class' => 'form-control' ]) !!}
+                    </div>
+
+                    <div class="form-group" id="profile-picture-submit-button-holder">
+                        {!! Form::submit('Upload', [ 'class' => 'form-control' ]) !!}
+                    </div>
+
+                    {!! Form::close() !!}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Manage profile picture</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <img src="{{ $profile->profile_picture != null ? $profile->profile_picture : '/images/profile_picture.jpg' }}" id="manage-profile-picture" class="center-block" />
                 </div>
             </div>
         </div>

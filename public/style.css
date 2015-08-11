@@ -44,3 +44,18 @@
 .comments-show-all-link {
     margin-top: 5px;
 }
+
+#manage-profile-picture {
+    width: 160px;
+    height: 160px;
+}
+
+#profile-picture-submit-button-holder {
+    margin-bottom: 0;
+}
+
+#post-profile-picture,
+#comment-profile-picture {
+    width: 40px;
+    height: 40px;
+}

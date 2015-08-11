@@ -34,6 +34,10 @@ class Profile extends Model
         return Profile::where('user_id', $user_id)->firstOrFail();
     }
 
+    public static function setProfilePicture($user_id, $picture_path) {
+        return Profile::where('user_id', $user_id)->update([ 'profile_picture' => $picture_path ]);
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'id');
