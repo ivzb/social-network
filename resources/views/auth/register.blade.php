@@ -1,39 +1,24 @@
-@extends('guest')
+@extends('layouts.auth')
+@section('title', 'login')
 @section('content')
-    <form method="POST" action="/auth/register">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @if (count($errors) > 0)
+        <div class="auth-errors">
+            <h2><strong>Whoops!</strong> There were some problems.<br><br></h2>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @else
+        <h1>New user?</h1>
+    @endif
 
-        {!! csrf_field() !!}
-
-        <ul>
-            <li>
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" value="{{ old('username') }}">
-            </li>
-            <li>
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}">
-            </li>
-            <li>
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password">
-            </li>
-            <li>
-                <label for="confirm-password_confirmation">Confirm Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation">
-            </li>
-            <li>
-                <button type="submit">Register</button>
-            </li>
-        </ul>
-    </form>
+    {!! Form::open(array('action' => 'Auth\AuthController@postRegister')) !!}
+    {!! Form::text('username', old('username'), [ 'placeholder' => 'Username' ]) !!}
+    {!! Form::text('email', old('email'), [ 'placeholder' => 'Email' ]) !!}
+    {!! Form::password('password', [ 'placeholder' => 'Password' ]) !!}
+    {!! Form::password('password_confirmation', [ 'placeholder' => 'Password' ]) !!}
+    {!! Form::submit('Register', [ 'id' => 'register-button']) !!}
+    {!! Form::close() !!}
 @endsection
