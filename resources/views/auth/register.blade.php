@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-@section('title', 'login')
+@section('title', 'register')
 @section('content')
     @if (count($errors) > 0)
         <div class="auth-errors">
@@ -18,7 +18,7 @@
     {!! Form::text('username', old('username'), [ 'placeholder' => 'Username' ]) !!}
     {!! Form::text('email', old('email'), [ 'placeholder' => 'Email' ]) !!}
     {!! Form::password('password', [ 'placeholder' => 'Password' ]) !!}
-    {!! Form::password('password_confirmation', [ 'placeholder' => 'Password' ]) !!}
+    {!! Form::password('password_confirmation', [ 'placeholder' => 'Password again' ]) !!}
     {!! Form::submit('Register', [ 'id' => 'register-button']) !!}
     {!! Form::close() !!}
 @endsection
